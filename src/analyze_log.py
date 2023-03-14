@@ -81,10 +81,10 @@ def most_requested_food_by_maria(data):
 # Retornando quantas vezes arnaldo pediu hamburgueres
 
 
-def count_harburguer_requested_by_arnaldo(data):
+def count_hamburguer_requested_by_arnaldo(data):
     arnaldo_count_food = get_food_count_by_person(data, 'arnaldo')
-    arnaldo_count_harburguer = arnaldo_count_food['harburguer']
-    return arnaldo_count_harburguer
+    arnaldo_count_hamburguer = arnaldo_count_food['hamburguer']
+    return arnaldo_count_hamburguer
 
 
 def analyze_log(path_to_file):
