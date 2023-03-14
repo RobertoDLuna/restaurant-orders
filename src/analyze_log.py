@@ -28,8 +28,18 @@ def get_unique_foods(data):
 
 
 # teste
-print(get_unique_foods(get_data('data/orders_1.csv')))
+# print(get_unique_foods(get_data('data/orders_1.csv')))
 
+# Retornando dias unicos
+
+def get_unique_days(data):
+    days_data = [element[2] for element in data]
+    days_unique = set(days_data)
+    return days_unique
+
+
+# teste
+# print(get_unique_days(get_data('data/orders_1.csv')))
 
 def analyze_log(path_to_file):
     raise NotImplementedError
