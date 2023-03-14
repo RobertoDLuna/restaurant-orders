@@ -1,4 +1,5 @@
 import csv
+import os
 
 # Importando os dados do arquivo
 
@@ -35,7 +36,7 @@ def get_unique_foods(data):
 def get_unique_days(data):
     # utilizando o i[2] para acessar a comida
     # array padrão de saida da get_data: ['nome', 'comida', 'dia']
-    days_data = [element[2] for element in data]
+    days_data = [row[2] for row in data]
     # utilando o set(array) pois não retornarão valores repetidos
     # transformando em um array de unique itens
     days_unique = set(days_data)
@@ -54,7 +55,7 @@ def get_food_count_by_person(data, person):
 
     # retornando as linhas onde a pessoa == person
     # utilizando o i[0] para localizar a pessoa na linha
-    info_person = [elem for elem in data if elem[0] == person]
+    info_person = [row for row in data if row[0] == person]
     # oara cada linha do info_person
     for row in info_person:
         # caso a comida ja exista no set
@@ -81,7 +82,7 @@ def most_requested_food_by_maria(data):
 # Retornando quantas vezes arnaldo pediu hamburgueres
 
 
-def count_hamburguer_requested_by_arnaldo(data):
+def count_requested_hamburguer_by_arnaldo(data):
     arnaldo_count_food = get_food_count_by_person(data, 'arnaldo')
     arnaldo_count_hamburguer = arnaldo_count_food['hamburguer']
     return arnaldo_count_hamburguer
@@ -90,13 +91,13 @@ def count_hamburguer_requested_by_arnaldo(data):
 # Retornando comida que joao nunca pediu
 
 
-def food_never_requested_by_joao(data):
+def food_joao_never_requested(data):
     unique_foods = get_unique_foods(data)
     joao_count_food = get_food_count_by_person(data, 'joao')
-    food_never_requested_by_joao = set([
-        food for food in unique_foods if food not in joao_count_food.keys()
-    ])
-    return food_never_requested_by_joao
+    food_joao_never_requested = set(
+        [food for food in unique_foods if food not in joao_count_food.keys()]
+    )
+    return food_joao_never_requested
 
 # Retornando doas que joão nunca foi na lanchonete
 
@@ -108,7 +109,7 @@ def days_that_joao_never_went(data):
     foods_joao = [food for food in data if food[0] == 'joao']
 
     # retorna os dias de joao
-    food_days_joao = [foods_joao[2] for food_joao in foods_joao]
+    food_days_joao = [foods_joao[2] for foods_joao in foods_joao]
 
     # Retorna quais dias do joao não constam no dias unicos
     joao_not_food_days = set([
@@ -119,9 +120,15 @@ def days_that_joao_never_went(data):
 
 
 def analyze_log(path_to_file):
+    if not path_to_file.endswith('.csv'):
+        raise FileNotFoundError(f"Extensão inválida: '{path_to_file}'")
+
+    if not os.path.isfile(path_to_file):
+        raise FileNotFoundError(f"Arquivo inexistente: '{path_to_file}'")
     data = get_data(path_to_file)
+
     with open('data/mkt_campaign.txt', 'w') as file:
         file.write(str(most_requested_food_by_maria(data)) + '\n')
-        file.write(str(count_hamburguer_requested_by_arnaldo(data)) + '\n')
-        file.write(str(food_never_requested_by_joao(data)) + '\n')
+        file.write(str(count_requested_hamburguer_by_arnaldo(data)) + '\n')
+        file.write(str(food_joao_never_requested(data)) + '\n')
         file.write(str(days_that_joao_never_went(data)))
