@@ -71,6 +71,21 @@ def get_food_count_by_person(data, person):
 # teste
 # print(get_food_count_by_person(get_data('data/orders_1.csv'), 'maria'))
 
+# Retornando prato mais pedido por maria
+
+def most_requested_food_by_maria(data):
+    maria_count_food = get_food_count_by_person(data, 'maria')
+    maria_most_food_ordered = max(maria_count_food, key=maria_count_food.get)
+    return maria_most_food_ordered
+
+# Retornando quantas vezes arnaldo pediu hamburgueres
+
+
+def count_harburguer_requested_by_arnaldo(data):
+    arnaldo_count_food = get_food_count_by_person(data, 'arnaldo')
+    arnaldo_count_harburguer = arnaldo_count_food['harburguer']
+    return arnaldo_count_harburguer
+
 
 def analyze_log(path_to_file):
     raise NotImplementedError
